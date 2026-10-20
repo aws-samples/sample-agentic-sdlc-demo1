@@ -1,0 +1,85 @@
+{
+  "initial_state": "draft",
+  "personas": {
+    "requirements-analyst": { "display": "Business Analyst", "order": 1 },
+    "system-architect": { "display": "Solution Architect", "order": 2 },
+    "software-developer": { "display": "Software Developer", "order": 3 },
+    "qa-engineer": { "display": "QA Engineer", "order": 4 },
+    "devops-engineer": { "display": "DevOps Engineer", "order": 5 }
+  },
+  "segments": {
+    "ba_segment": {
+      "owning_role": "requirements-analyst",
+      "stages": [
+        "workspace_detection",
+        "reverse_engineering",
+        "requirements_analysis",
+        "user_stories"
+      ],
+      "entry_node": "workspace_detection_ext",
+      "exit_hub": "hub_post_user_stories"
+    },
+    "sa_segment": {
+      "owning_role": "system-architect",
+      "stages": [
+        "workflow_planning",
+        "nfr_requirements",
+        "nfr_design",
+        "application_design",
+        "units_generation",
+        "inception_complete"
+      ],
+      "entry_node": "workflow_planning",
+      "exit_hub": "hub_post_inception_complete"
+    },
+    "dev_segment": {
+      "owning_role": "software-developer",
+      "stages": [
+        "construction_handoff"
+      ],
+      "entry_node": "construction_handoff",
+      "exit_hub": "hub_post_construction_handoff"
+    },
+    "qa_segment": {
+      "owning_role": "qa-engineer",
+      "stages": [
+        "test_planning",
+        "test_execution",
+        "qa_report"
+      ],
+      "entry_node": "test_planning",
+      "exit_hub": "hub_post_qa_report"
+    },
+    "devops_segment": {
+      "owning_role": "devops-engineer",
+      "stages": [
+        "deployment_planning",
+        "release"
+      ],
+      "entry_node": "deployment_planning",
+      "exit_hub": "hub_post_release"
+    }
+  },
+  "states": {
+    "draft": { "owning_role": "requirements-analyst", "segment": "ba_segment", "forward": "requirements_ready" },
+    "requirements_ready": { "owning_role": "requirements-analyst", "segment": "ba_segment", "forward": "assigned_to_sa" },
+    "assigned_to_sa": { "owning_role": "system-architect", "segment": "sa_segment", "forward": "in_design" },
+    "in_design": { "owning_role": "system-architect", "segment": "sa_segment", "forward": "design_ready" },
+    "design_ready": { "owning_role": "system-architect", "segment": "sa_segment", "forward": "ready_for_dev" },
+    "ready_for_dev": { "owning_role": "system-architect", "segment": "sa_segment", "forward": "assigned_to_dev" },
+    "assigned_to_dev": { "owning_role": "software-developer", "segment": "dev_segment", "forward": "implementation_submitted" },
+    "implementation_submitted": { "owning_role": "software-developer", "segment": "dev_segment", "forward": "assigned_to_qa" },
+    "assigned_to_qa": { "owning_role": "qa-engineer", "segment": "qa_segment", "forward": "in_qa" },
+    "in_qa": { "owning_role": "qa-engineer", "segment": "qa_segment", "forward": "qa_passed" },
+    "qa_passed": { "owning_role": "qa-engineer", "segment": "qa_segment", "forward": "assigned_to_devops" },
+    "assigned_to_devops": { "owning_role": "devops-engineer", "segment": "devops_segment", "forward": "in_deployment" },
+    "in_deployment": { "owning_role": "devops-engineer", "segment": "devops_segment", "forward": "deployed" },
+    "deployed": { "owning_role": "devops-engineer", "segment": "devops_segment", "forward": null }
+  },
+  "request_changes": {
+    "assigned_to_sa": { "target": "requirements_ready", "label": "Changes requested" },
+    "assigned_to_dev": { "target": "design_ready", "label": "Design changes requested" },
+    "in_qa": { "target": "assigned_to_dev", "label": "QA changes requested" },
+    "in_deployment": { "target": "assigned_to_qa", "label": "Deployment changes requested" }
+  }
+}

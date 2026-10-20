@@ -1,0 +1,28 @@
+[project]
+name = "ai-sdlc-multi-agent"
+version = "0.1.0"
+description = "AI-driven Software Development Life Cycle multi-agent system"
+requires-python = ">=3.13"
+dependencies = [
+    "strands-agents",
+    "strands-agents-builder",
+    "bedrock-agentcore",
+    "boto3",
+    "mcp",
+    "aws-opentelemetry-distro>=0.16.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hypothesis",
+    "pytest",
+    "pytest-asyncio",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["../../tests/python/agent"]
+pythonpath = ["."]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,11 @@
+# Runtime dependencies for the Lambda Tools target.
+#
+# boto3 is provided by the AWS Lambda Python runtime and is intentionally not
+# pinned here.
+#
+# pypdf and python-docx back the extract_document_text tool (design Section
+# 7b, requirements 5.2-5.3): pypdf parses uploaded .pdf documents and
+# python-docx parses uploaded .docx documents into plain text that the
+# Requirements_Analysis_Agent can ingest directly.
+pypdf==6.12.2
+python-docx==1.2.0
