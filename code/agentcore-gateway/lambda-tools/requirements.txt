@@ -7,5 +7,5 @@
 # 7b, requirements 5.2-5.3): pypdf parses uploaded .pdf documents and
 # python-docx parses uploaded .docx documents into plain text that the
 # Requirements_Analysis_Agent can ingest directly.
-pypdf==6.12.2
+pypdf==6.21.2
 python-docx==1.2.0
